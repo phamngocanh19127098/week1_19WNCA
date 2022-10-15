@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  mysql_db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: 19WNCA
+    ports:
+      - 3306:3306
+    volumes:
+      - /home/davidpham/Documents/19WNCA/data:/var/lib/mysql
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql_db
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
